@@ -1,5 +1,8 @@
 package QKART_SANITY_LOGIN.Module1;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -22,10 +25,14 @@ public class SearchResult {
      * search result
      */
     public String getTitleofResult() {
+        
         String titleOfSearchResult = "";
+
+        titleOfSearchResult += parentElement.getText();
         // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 03: MILESTONE 1
         // Find the element containing the title (product name) of the search result and
         // assign the extract title text to titleOfSearchResult
+        System.out.println(titleOfSearchResult);
         return titleOfSearchResult;
     }
 
@@ -34,77 +41,97 @@ public class SearchResult {
      */
     public Boolean openSizechart() {
         try {
-
-            // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
-            // Find the link of size chart in the parentElement and click on it
-            return true;
-        } catch (Exception e) {
-            System.out.println("Exception while opening Size chart: " + e.getMessage());
-            return false;
+           WebElement sizecharbutton = this.parentElement.findElement(By.className("css-1qw96cp")).findElement(By.tagName("button"));
+           if (sizecharbutton.isEnabled()) {
+              sizecharbutton.click();
+              return true;
+           } else {
+              return null;
+           }
+        } catch (Exception var2) {
+           System.out.println("Exception while opening Size chart: " + var2.getMessage());
+           return false;
         }
-    }
+     }
 
     /*
      * Return Boolean denoting if the close size chart operation was successful
      */
     public Boolean closeSizeChart(WebDriver driver) {
         try {
-            Thread.sleep(2000);
-            Actions action = new Actions(driver);
-
-            // Clicking on "ESC" key closes the size chart modal
-            action.sendKeys(Keys.ESCAPE);
-            action.perform();
-            Thread.sleep(2000);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Exception while closing the size chart: " + e.getMessage());
-            return false;
+           Thread.sleep(2000L);
+           Actions action = new Actions(driver);
+           action.sendKeys(new CharSequence[]{Keys.ESCAPE}).perform();;
+        //    action.perform();
+           Thread.sleep(2000L);
+           return true;
+        } catch (Exception var3) {
+           System.out.println("Exception while closing the size chart: " + var3.getMessage());
+           return false;
         }
-    }
+     }
 
     /*
      * Return Boolean based on if the size chart exists
      */
     public Boolean verifySizeChartExists() {
         Boolean status = false;
+    
         try {
-            // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
-            /*
-             * Check if the size chart element exists. If it exists, check if the text of
-             * the element is "SIZE CHART". If the text "SIZE CHART" matches for the
-             * element, set status = true , else set to false
-             */
+            if (this.parentElement.findElement(By.className("css-1qw96cp")).findElement(By.tagName("button"))
+                .getText().equals("SIZE CHART")) {
+                status = true;
+            }
+    
             return status;
-        } catch (Exception e) {
+        } catch (Exception var3) {
             return status;
         }
     }
-
+    
     /*
      * Return Boolean if the table headers and body of the size chart matches the
      * expected values
      */
-    public Boolean validateSizeChartContents(List<String> expectedTableHeaders, List<List<String>> expectedTableBody,
-            WebDriver driver) {
+    public Boolean validateSizeChartContents(List<String> expectedTableHeaders, List<List<String>> expectedTableBody, WebDriver driver) {
         Boolean status = true;
+    
         try {
-            // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
-            /*
-             * Locate the table element when the size chart modal is open
-             * 
-             * Validate that the contents of expectedTableHeaders is present as the table
-             * header in the same order
-             * 
-             * Validate that the contents of expectedTableBody are present in the table body
-             * in the same order
-             */
-            return status;
+            WebElement sizeChartTable = driver.findElement(By.className("css-uhb5lp"));
+            WebElement tableElement = sizeChartTable.findElement(By.tagName("table"));
+            List<WebElement> tableHeaderElements = tableElement.findElement(By.tagName("thead")).findElements(By.tagName("th"));
+            String tempHeaderValue;
 
+            for(int i=0;i<expectedTableHeaders.size();i++){
+                tempHeaderValue = tableHeaderElements.get(i).getText();
+    
+            if (!expectedTableHeaders.get(i).equals(tempHeaderValue)) {
+                status = false;
+                System.out.println("Table Headers do not match.");
+            } 
+        }
+                List<WebElement> tableBodyRows = tableElement.findElement(By.tagName("tbody"))
+                .findElements(By.tagName(("tr")));
+    
+                if (tableBodyRows.isEmpty()) {
+                    status = false;
+                    System.out.println("No rows found in the table.");
+                } else {
+                        for(int i=0;i<expectedTableBody.size();i++){
+                            for(int j=1;j<=expectedTableBody.get(i).size();j++){
+                                if(!tableBodyRows.get(i).findElement(By.xpath("td["+j+"]")).getText()
+                                .equalsIgnoreCase(expectedTableBody.get(i).get(j-1))){
+                                    return false;
+                                }
+                            }
+                        }
+                    }
         } catch (Exception e) {
-            System.out.println("Error while validating chart contents");
+            System.out.println("Error while validating chart contents: " + e.getMessage());
             return false;
         }
+    
+        return status;
     }
 
     /*
@@ -112,12 +139,17 @@ public class SearchResult {
      */
     public Boolean verifyExistenceofSizeDropdown(WebDriver driver) {
         Boolean status = false;
+  
         try {
-            // TODO: CRIO_TASK_MODULE_TEST_AUTOMATION - TEST CASE 04: MILESTONE 2
-            // If the size dropdown exists and is displayed return true, else return false
-            return status;
-        } catch (Exception e) {
-            return status;
+           if (this.parentElement.findElement(By.className("css-3zukih"))
+           .findElement(By.className("css-13sljp9"))
+           .findElement(By.tagName("select")).isEnabled()) {
+              status = true;
+           }
+  
+           return status;
+        } catch (Exception var4) {
+           return status;
         }
-    }
+     }
 }
