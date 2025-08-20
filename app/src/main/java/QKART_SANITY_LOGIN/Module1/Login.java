@@ -46,6 +46,7 @@ public class Login {
         // Click the login Button
         login_button.click();
 
+        // SLEEP_STMT_13: Wait for Login to Complete
         // Wait for Login action to complete
         Thread.sleep(5000);
 
@@ -56,7 +57,7 @@ public class Login {
         try {
             // Find the username label (present on the top right of the page)
             WebElement username_label;
-             username_label = this.driver.findElement(By.className("username-text"));
+            username_label = this.driver.findElement(By.className("username-text"));
             return username_label.getText().equals(Username);
         } catch (Exception e) {
             return false;
