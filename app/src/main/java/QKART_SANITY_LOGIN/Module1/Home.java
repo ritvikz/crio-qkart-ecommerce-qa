@@ -46,7 +46,7 @@ public class Home {
     public Boolean searchForProduct(String product) {
         try {
             // Clear the contents of the search box and Enter the product name in the search
-            // box
+            // box123
             WebElement searchBox = driver.findElement(By.xpath("//input[@name='search'][1]"));
             searchBox.clear();
             searchBox.sendKeys(product);
