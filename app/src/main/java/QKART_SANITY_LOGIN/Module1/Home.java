@@ -51,8 +51,8 @@ public class Home {
             searchBox.clear();
             searchBox.sendKeys(product);
             WebDriverWait wait = new WebDriverWait(driver,30);
-            wait.until(ExpectedConditions.or(ExpectedConditions.textToBePresentInElementLocated(By.className("css-yg30ev6"), product),
-            ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/div/h4"))));
+            wait.until(ExpectedConditions.or(ExpectedConditions.textToBePresentInElementLocated(By.className("css-yg30e6"), product),
+            ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 css-yg30e6']"))));
             Thread.sleep(3000);
             return true;
         } catch (Exception e) {

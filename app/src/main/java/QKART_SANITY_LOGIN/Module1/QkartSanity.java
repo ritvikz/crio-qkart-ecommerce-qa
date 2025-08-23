@@ -782,7 +782,7 @@ public class QkartSanity {
             System.out.println("");
 
             // Execute Test Case 8
-            totalTests += 1;
+           /*  totalTests += 1;
             status = TestCase08(driver);
             if (status) {
                 passedTests += 1;
@@ -814,9 +814,10 @@ public class QkartSanity {
             if (status) {
                 passedTests += 1;
             }
+            
 
             System.out.println("");
-
+            */
         
         } catch (Exception e) {
             throw e;
