@@ -45,21 +45,30 @@ public class Home {
      */
     public Boolean searchForProduct(String product) {
         try {
-            // Clear the contents of the search box and Enter the product name in the search
-            // box123
+            // type into search box
             WebElement searchBox = driver.findElement(By.xpath("//input[@name='search'][1]"));
             searchBox.clear();
             searchBox.sendKeys(product);
-            WebDriverWait wait = new WebDriverWait(driver,30);
-            wait.until(ExpectedConditions.or(ExpectedConditions.textToBePresentInElementLocated(By.className("css-yg30e6"), product),
-            ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 css-yg30e6']"))));
-            Thread.sleep(3000);
-            return true;
+    
+            // wait until either results show up OR the "No products found" message appears
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.or(
+                    // any result card present
+                    ExpectedConditions.presenceOfElementLocated(By.className("css-1qw96cp")),
+                    // or the "No products found" label
+                    ExpectedConditions.presenceOfElementLocated(
+                            By.xpath("//*[contains(@class,'css-yg30e6') and contains(.,'No products found')]"))
+            ));
+    
+            // decide based on what actually exists
+            List<WebElement> results = driver.findElements(By.className("css-1qw96cp"));
+            return results != null && !results.isEmpty();
         } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
             return false;
         }
     }
+    
 
     /*
      * Returns Array of Web Elements that are search results and return the same
