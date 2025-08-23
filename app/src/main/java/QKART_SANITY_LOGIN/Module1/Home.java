@@ -2,6 +2,7 @@ package QKART_SANITY_LOGIN.Module1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -45,29 +46,37 @@ public class Home {
      */
     public Boolean searchForProduct(String product) {
         try {
-            // type into search box
             WebElement searchBox = driver.findElement(By.xpath("//input[@name='search'][1]"));
             searchBox.clear();
             searchBox.sendKeys(product);
     
-            // wait until either results show up OR the "No products found" message appears
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            // Wait for either new search results or "No products found"
+            WebDriverWait wait = new WebDriverWait(driver, 5);
             wait.until(ExpectedConditions.or(
-                    // any result card present
-                    ExpectedConditions.presenceOfElementLocated(By.className("css-1qw96cp")),
-                    // or the "No products found" label
-                    ExpectedConditions.presenceOfElementLocated(
-                            By.xpath("//*[contains(@class,'css-yg30e6') and contains(.,'No products found')]"))
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='root']//h4[contains(text(),'No products found')]")),
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("css-1qw96cp"))
             ));
     
-            // decide based on what actually exists
+            // Check if "No products found" is displayed
+            List<WebElement> noResult = driver.findElements(By.xpath("//*[@id='root']//h4[contains(text(),'No products found')]"));
+            if (!noResult.isEmpty() && noResult.get(0).isDisplayed()) {
+                return false; // invalid keyword, no results
+            }
+    
+            // Otherwise, fetch results
             List<WebElement> results = driver.findElements(By.className("css-1qw96cp"));
-            return results != null && !results.isEmpty();
+            return !results.isEmpty();
+    
         } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
             return false;
         }
     }
+    
+    
+    
+    
+    
     
 
     /*
