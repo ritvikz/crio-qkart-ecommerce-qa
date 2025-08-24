@@ -790,7 +790,7 @@ if (!foundYONEX) {
             System.out.println("");
 
             // Execute Test Case 8
-           /*  totalTests += 1;
+            totalTests += 1;
             status = TestCase08(driver);
             if (status) {
                 passedTests += 1;
@@ -825,7 +825,7 @@ if (!foundYONEX) {
             
 
             System.out.println("");
-            */
+            
         
         } catch (Exception e) {
             throw e;
