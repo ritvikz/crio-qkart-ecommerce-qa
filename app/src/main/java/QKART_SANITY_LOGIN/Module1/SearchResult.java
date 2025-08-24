@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchResult {
     WebElement parentElement;
-    
 
     public SearchResult(WebElement SearchResultElement) {
         this.parentElement = SearchResultElement;
@@ -52,18 +51,26 @@ public class SearchResult {
      */
     public Boolean closeSizeChart(WebDriver driver) {
         try {
+<<<<<<< ours
             synchronized (driver) {
                 driver.wait(2000);
             }
             
+=======
+            Thread.sleep(2000);
+>>>>>>> theirs
             Actions action = new Actions(driver);
 
             action.sendKeys(Keys.ESCAPE);
             action.perform();
+<<<<<<< ours
 
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("MuiDialog-paperScrollPaper")));
 
+=======
+            Thread.sleep(2000);
+>>>>>>> theirs
             return true;
         } catch (Exception e) {
             System.out.println("Exception while closing the size chart: " + e.getMessage());
@@ -75,6 +82,7 @@ public class SearchResult {
      * Return Boolean based on if the size chart exists
      */
     public Boolean verifySizeChartExists() {
+<<<<<<< ours
         try {
             // Find any element containing 'SIZE CHART'
             WebElement btn = parentElement.findElement(
@@ -93,6 +101,20 @@ public class SearchResult {
     
     
     
+=======
+        Boolean status = false;
+        try {
+            /*
+             * Check if the size chart element exists. If it exists, check if the text of
+             * the element is "SIZE CHART". If the text "SIZE CHART" matches for the
+             * element, set status = true , else set to false
+             */
+            return status;
+        } catch (Exception e) {
+            return status;
+        }
+    }
+>>>>>>> theirs
 
     /*
      * Return Boolean if the table headers and body of the size chart matches the

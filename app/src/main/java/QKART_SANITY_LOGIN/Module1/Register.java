@@ -37,7 +37,11 @@ public class Register {
             // Concatenate the timestamp to string to form unique timestamp
             test_data_username = Username + "_" + String.valueOf(timestamp.getTime());
         else
+<<<<<<< ours
             test_data_username = Username;
+=======
+        test_data_username = Username;
+>>>>>>> theirs
 
         // Type the generated username in the username field
         username_txt_box.sendKeys(test_data_username);
@@ -49,7 +53,13 @@ public class Register {
         // Enter the Password value
         password_txt_box.sendKeys(test_data_password);
 
+<<<<<<< ours
         WebElement confirm_password_txt_box = this.driver.findElement(By.id("confirmPassword"));
+=======
+        // Find the Confirm password text box
+        WebElement confirm_password_txt_box;
+        confirm_password_txt_box = this.driver.findElement(By.id("confirmPassword"));
+>>>>>>> theirs
 
         // Enter the Confirm Password Value
         confirm_password_txt_box.sendKeys(test_data_password);
@@ -59,6 +69,7 @@ public class Register {
 
         // Click the register now button
         register_now_button.click();
+<<<<<<< ours
 
         try {
             WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -67,9 +78,19 @@ public class Register {
         } catch (TimeoutException e) {
             return false;
         }
+=======
+        // Wait for registration to complete
+        Thread.sleep(3000);
+
+        // SLEEP_STMT_06: Wait for new user to get created in the backend
+>>>>>>> theirs
 
         this.lastGeneratedUsername = test_data_username;
 
         return this.driver.getCurrentUrl().endsWith("/login");
     }
+<<<<<<< ours
 }
+=======
+}
+>>>>>>> theirs

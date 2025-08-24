@@ -46,9 +46,15 @@ public class Login {
         // Click the login Button
         login_button.click();
 
+<<<<<<< ours
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(30))
                 .pollingEvery(Duration.ofMillis(600)).ignoring(NoSuchElementException.class);
         wait.until(ExpectedConditions.invisibilityOf(login_button));
+=======
+        // SLEEP_STMT_13: Wait for Login to Complete
+        // Wait for Login action to complete
+        Thread.sleep(5000);
+>>>>>>> theirs
 
         return this.VerifyUserLoggedIn(Username);
     }
@@ -56,7 +62,12 @@ public class Login {
     public Boolean VerifyUserLoggedIn(String Username) {
         try {
             // Find the username label (present on the top right of the page)
+<<<<<<< ours
             WebElement username_label = this.driver.findElement(By.className("username-text"));
+=======
+            WebElement username_label;
+            username_label = this.driver.findElement(By.className("username-text"));
+>>>>>>> theirs
             return username_label.getText().equals(Username);
         } catch (Exception e) {
             return false;
@@ -64,4 +75,8 @@ public class Login {
 
     }
 
+<<<<<<< ours
 }
+=======
+}
+>>>>>>> theirs

@@ -30,8 +30,14 @@ public class Home {
             WebElement logout_button = driver.findElement(By.className("MuiButton-text"));
             logout_button.click();
 
+<<<<<<< ours
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.invisibilityOfElementWithText(By.className("css-1urhf6j"), "Logout"));
+=======
+            // SLEEP_STMT_10: Wait for Logout to complete
+            // Wait for Logout to Complete
+            Thread.sleep(3000);
+>>>>>>> theirs
 
             return true;
         } catch (Exception e) {
@@ -46,6 +52,7 @@ public class Home {
      */
     public Boolean searchForProduct(String product) {
         try {
+<<<<<<< ours
             WebElement searchBox = driver.findElement(By.xpath("//input[@name='search'][1]"));
             searchBox.clear();
             searchBox.sendKeys(product);
@@ -67,17 +74,14 @@ public class Home {
             List<WebElement> results = driver.findElements(By.className("css-1qw96cp"));
             return !results.isEmpty();
     
+=======
+            return true;
+>>>>>>> theirs
         } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
             return false;
         }
     }
-    
-    
-    
-    
-    
-    
 
     /*
      * Returns Array of Web Elements that are search results and return the same
@@ -121,6 +125,7 @@ public class Home {
              * 
              * Return true if these operations succeeds
              */
+<<<<<<< ours
             List<WebElement> gridContent = driver.findElementsByClassName("css-sycj1h");
             for (WebElement cell : gridContent) {
                 if (productName.contains(cell.findElement(By.className("css-yg30e6")).getText())) {
@@ -133,6 +138,9 @@ public class Home {
                 }
             }
             System.out.println("Unable to find the given product: " + productName);
+=======
+            System.out.println("Unable to find the given product");
+>>>>>>> theirs
             return false;
         } catch (Exception e) {
             System.out.println("Exception while performing add to cart: " + e.getMessage());
@@ -198,7 +206,11 @@ public class Home {
         } catch (Exception e) {
             if (quantity == 0)
                 return true;
+<<<<<<< ours
             System.out.println(("exception occurred when updating cart"));
+=======
+            System.out.println("exception occurred when updating cart: " + e.getMessage());
+>>>>>>> theirs
             return false;
         }
     }
@@ -208,8 +220,6 @@ public class Home {
      */
     public Boolean verifyCartContents(List<String> expectedCartContents) {
         try {
-
-
             WebElement cartParent = driver.findElement(By.className("cart"));
             List<WebElement> cartContents = cartParent.findElements(By.className("css-zgtx0t"));
 
@@ -220,7 +230,11 @@ public class Home {
             }
 
             for (String expected : expectedCartContents) {
+<<<<<<< ours
                 if (!actualCartContents.contains(expected.trim())) {
+=======
+                if (!actualCartContents.contains(expected)) {
+>>>>>>> theirs
                     return false;
                 }
             }
@@ -232,4 +246,8 @@ public class Home {
             return false;
         }
     }
+<<<<<<< ours
 }
+=======
+}
+>>>>>>> theirs

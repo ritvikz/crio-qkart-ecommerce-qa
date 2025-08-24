@@ -122,4 +122,8 @@ public class Checkout {
             return false;
         }
     }
+<<<<<<< ours
 }
+=======
+}
+>>>>>>> theirs
