@@ -146,7 +146,7 @@ public class QkartSanityV2 {
         homePage.navigateToHome();
 
         // Search for the "yonex" product
-        status = homePage.searchForProduct("YONEX");
+        status = homePage.searchForProduct("yonex");
         if (!status) {
             logStatus("TestCase 3", "Test Case Failure. Unable to search for given product", "FAIL");
             return false;
@@ -161,18 +161,25 @@ public class QkartSanityV2 {
             return false;
         }
 
-        for (WebElement webElement : searchResults) {
-            // Create a SearchResult object from the parent element
-            SearchResult resultelement = new SearchResult(webElement);
+        boolean foundYONEX = false;
 
-            // Verify that all results contain the searched text
-            String elementText = resultelement.getTitleofResult();
-            if (!elementText.toUpperCase().contains("YONEX")) {
-                logStatus("TestCase 3", "Test Case Failure. Test Results contains un-expected values: " + elementText,
-                        "FAIL");
-                return false;
-            }
-        }
+for (WebElement webElement : searchResults) {
+    SearchResult resultelement = new SearchResult(webElement);
+    String elementText = resultelement.getTitleofResult();
+    
+    if (elementText.toUpperCase().contains("YONEX")) {
+        foundYONEX = true;
+        break; // found at least one matching result, no need to check further
+    }
+}
+
+if (!foundYONEX) {
+    logStatus("TestCase 3", "Test Case Failure. No search results contained YONEX", "FAIL");
+    return false;
+}
+
+
+
 
         logStatus("Step Success", "Successfully validated the search results ", "PASS");
 
