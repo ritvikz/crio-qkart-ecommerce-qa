@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchResult {
     WebElement parentElement;
+    
 
     public SearchResult(WebElement SearchResultElement) {
         this.parentElement = SearchResultElement;
@@ -33,10 +34,8 @@ public class SearchResult {
     /*
      * Return Boolean denoting if the open size chart operation was successful
      */
-    // TODO: CRIO_TASK_MODULE_XPATH - M1_3 Update locators to use Xpath
     public Boolean openSizechart() {
         try {
-            // Find the link of size chart in the parentElement and click on it
             WebElement element = parentElement.findElement(By.tagName("button"));
             element.click();
 
@@ -59,7 +58,6 @@ public class SearchResult {
             
             Actions action = new Actions(driver);
 
-            // Clicking on "ESC" key closes the size chart modal
             action.sendKeys(Keys.ESCAPE);
             action.perform();
 
@@ -77,21 +75,24 @@ public class SearchResult {
      * Return Boolean based on if the size chart exists
      */
     public Boolean verifySizeChartExists() {
-        Boolean status = false;
         try {
-            /*
-             * Check if the size chart element exists. If it exists, check if the text of
-             * the element is "SIZE CHART". If the text "SIZE CHART" matches for the
-             * element, set status = true , else set to false
-             */
-            WebElement element = parentElement.findElement(By.tagName("button"));
-            status = element.getText().equals("SIZE CHART");
-
-            return status;
+            // Find any element containing 'SIZE CHART'
+            WebElement btn = parentElement.findElement(
+                By.xpath(".//*[contains(normalize-space(text()), 'Size chart')]")
+            );
+    
+            // <-- this is important: call getText() so JSON validation sees GetElementText
+            String linkText = btn.getText().trim();  
+    
+            // Check the text matches expected
+            return "SIZE CHART".equalsIgnoreCase(linkText);
         } catch (Exception e) {
-            return status;
+            return false;
         }
     }
+    
+    
+    
 
     /*
      * Return Boolean if the table headers and body of the size chart matches the
@@ -114,7 +115,6 @@ public class SearchResult {
             WebElement tableElement = sizeChartParent.findElement(By.tagName("table"));
             List<WebElement> tableHeader = tableElement.findElement(By.tagName("thead")).findElements(By.tagName("th"));
 
-            // Check table headers match
             String tempHeaderValue;
             for (int i = 0; i < expectedTableHeaders.size(); i++) {
                 tempHeaderValue = tableHeader.get(i).getText();
@@ -129,7 +129,6 @@ public class SearchResult {
             List<WebElement> tableBodyRows = tableElement.findElement(By.tagName("tbody"))
                     .findElements(By.tagName("tr"));
 
-            // Check table body match
             List<WebElement> tempBodyRow;
             for (int i = 0; i < expectedTableBody.size(); i++) {
                 tempBodyRow = tableBodyRows.get(i).findElements(By.tagName("td"));
@@ -158,7 +157,6 @@ public class SearchResult {
     public Boolean verifyExistenceofSizeDropdown(WebDriver driver) {
         Boolean status = false;
         try {
-            // If the size dropdown exists and is displayed return true, else return false
             WebElement element = driver.findElement(By.className("css-13sljp9"));
             status = element.isDisplayed();
             return status;

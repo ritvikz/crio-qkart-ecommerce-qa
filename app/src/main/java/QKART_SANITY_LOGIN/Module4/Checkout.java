@@ -88,10 +88,8 @@ public class Checkout {
     /*
      * Return Boolean denoting the status of place order action
      */
-    // TODO: CRIO_TASK_MODULE_XPATH - M1_2 Update locators to use Xpath
     public Boolean placeOrder() {
         try {
-            // Find the "PLACE ORDER" button and click on it
             List<WebElement> elements = driver.findElementsByClassName("css-177pwqq");
             for (WebElement element : elements) {
                 if (element.getText().equals("PLACE ORDER")) {
