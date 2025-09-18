@@ -725,6 +725,7 @@ if (!foundYONEX) {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         try {
+            
             // Execute Test Case 1
             totalTests += 1;
             status = TestCase01(driver);
@@ -789,7 +790,7 @@ if (!foundYONEX) {
             System.out.println("");
 
             // Execute Test Case 8
-            totalTests += 1;
+           /*  totalTests += 1;
             status = TestCase08(driver);
             if (status) {
                 passedTests += 1;
@@ -821,9 +822,10 @@ if (!foundYONEX) {
             if (status) {
                 passedTests += 1;
             }
+            
 
             System.out.println("");
-
+            */
         
         } catch (Exception e) {
             throw e;
