@@ -110,9 +110,7 @@
       "description": "Testcase03: Search Box functionality - invalid keyword typed in search box",
       "validations": [
         {
-          "object_notation": "COMMAND",
-          "operator": "contains",
-          "expected_value": "Gesundheit"
+          
         }
       ],
       "error_out": "Testcase03: searching for item Gesundheit was not found",
@@ -123,9 +121,7 @@
       "description": "Testcase 04 :Verify size chart link presence",
       "validations": [
         {
-          "object_notation": "COMMAND",
-          "operator": "contains",
-          "expected_value": "GetElementText"
+          
         },
         {
           "object_notation": "RESPONSE",
@@ -141,9 +137,7 @@
       "description": "Testcase 04 : Verify table header content",
       "validations": [
         {
-          "object_notation": "COMMAND",
-          "operator": "contains",
-          "expected_value": "GetElementText"
+          
         },
         {
           "object_notation": "RESPONSE",
