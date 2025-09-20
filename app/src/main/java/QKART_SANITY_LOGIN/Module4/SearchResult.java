@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchResult {
     WebElement parentElement;
-    
 
     public SearchResult(WebElement SearchResultElement) {
         this.parentElement = SearchResultElement;
@@ -75,24 +74,21 @@ public class SearchResult {
      * Return Boolean based on if the size chart exists
      */
     public Boolean verifySizeChartExists() {
+        Boolean status = false;
         try {
-            // Find any element containing 'SIZE CHART'
-            WebElement btn = parentElement.findElement(
-                By.xpath(".//*[contains(normalize-space(text()), 'Size chart')]")
-            );
-    
-            // <-- this is important: call getText() so JSON validation sees GetElementText
-            String linkText = btn.getText().trim();  
-    
-            // Check the text matches expected
-            return "SIZE CHART".equalsIgnoreCase(linkText);
+            /*
+             * Check if the size chart element exists. If it exists, check if the text of
+             * the element is "SIZE CHART". If the text "SIZE CHART" matches for the
+             * element, set status = true , else set to false
+             */
+            WebElement element = parentElement.findElement(By.tagName("button"));
+            status = element.getText().equals("SIZE CHART");
+
+            return status;
         } catch (Exception e) {
-            return false;
+            return status;
         }
     }
-    
-    
-    
 
     /*
      * Return Boolean if the table headers and body of the size chart matches the
