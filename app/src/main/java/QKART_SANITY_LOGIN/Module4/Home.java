@@ -45,16 +45,27 @@ public class Home {
      */
     public Boolean searchForProduct(String product) {
         try {
-            // Clear the contents of the search box and Enter the product name in the search
-            // box
             WebElement searchBox = driver.findElement(By.xpath("//input[@name='search'][1]"));
             searchBox.clear();
             searchBox.sendKeys(product);
-            WebDriverWait wait = new WebDriverWait(driver,30);
-            wait.until(ExpectedConditions.or(ExpectedConditions.textToBePresentInElementLocated(By.className("css-yg30ev6"), product),
-            ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"root\"]/div/div[3]/div[1]/div[2]/div/h4"))));
-            Thread.sleep(3000);
-            return true;
+    
+            // Wait for either new search results or "No products found"
+            WebDriverWait wait = new WebDriverWait(driver, 5);
+            wait.until(ExpectedConditions.or(
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='root']//h4[contains(text(),'No products found')]")),
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("css-1qw96cp"))
+            ));
+    
+            // Check if "No products found" is displayed
+            List<WebElement> noResult = driver.findElements(By.xpath("//*[@id='root']//h4[contains(text(),'No products found')]"));
+            if (!noResult.isEmpty() && noResult.get(0).isDisplayed()) {
+                return false; // invalid keyword, no results
+            }
+    
+            // Otherwise, fetch results
+            List<WebElement> results = driver.findElements(By.className("css-1qw96cp"));
+            return !results.isEmpty();
+    
         } catch (Exception e) {
             System.out.println("Error while searching for a product: " + e.getMessage());
             return false;
